@@ -1,0 +1,33 @@
+---
+title: "A Strategic Interaction Estimator: A Primer"
+author: "Miles Williams"
+date: "May 17, 2019"
+output: 
+  pdf_document:
+    number_sections: yes
+geometry: margin=1.25in
+header-includes:
+- \usepackage{setspace}
+- \doublespacing
+- \setlength\parindent{24pt}
+- \setlength\parskip{1pt}
+---
+
+# Introduction
+Economatricians and other applied researchers use tried and true methods for estimating relationships among variables of theoretical interest, and for good reason. However, occasionally a researcher wishes to make statistical inferences back to a specific and well-identified data generating process (d.g.p.). A theoretical model of an individual actor's behavior often describes this d.g.p., though in practice researchers frequently use empirical estimators whose functional form runs afoul of that specified by theory. Here, I describe a new estimator that allows a researcher to make statistical inferences back to a well defined and established theoretical model of consumption of some good with either public or private properties. This Strategic Interaction Estimator (SIE), as I call it, has applications to a range of issues, from individual payment for a public good by a consumer to military expenditures by states in a defense alliance. 
+
+In the following note, I begin with a summary of the theoretical d.g.p. I then describe SIE, which allows the researcher to make statistical inferences to the d.g.p. of interest. I next conduct a Monte Carlo simulation to demonstrate the shortfalls of relying on workhorse methods such as OLS in lieu of SIE when conducting analyses of strategic interactions. I conclude with a summary of SIE's merits, a word of caution about its application, and links to code that allow a researcher to implement SIE in the versatile (and free!) environment for statistical analysis provided by `R`.
+
+# A Theoretical Model of Strategic Interactions
+On the basis of expected utility theory, in this section I describe a simple model of utility for an actor, $i$, in a set of $1,...,I$ individuals. $i$'s utility is specified in the form of the well-known Cobb-Douglass type. The value of this functional form, which is well known and discussed at length in many economic textbooks, lies in its assumption that actors have monotonically increasing, concave preferences for individual goods. That is, *more* of something is assumed to always be better than *less* of that same thing, but the value added per unit increase in this something diminishes the more of this thing an individual has. This property allows for "well behaved" indifference curves in actor's preferences between goods, that is, monotonically decreasing and convex indifference curves that allow for an interior solution where an actor's budget constraint runs tangent with its indifference curve. This property allows for a unique solution to an actor's constrained optimization problem.
+
+Now, to define explicitly $i$'s utility function. Let $i$ have an exogenously determined resource endowment, $R_i$. With $R_i$, $i$ may choose how much of some good, $D$, it will consume vis-$\grave{\text{a}}$-vis some other good $x$, which I define as a composite good, or numeraire, that denotes consumption of all goods other than $D$. Let utility, $u$, for $i$ be defined as
+$$u_i = \ln(x_i) + \alpha \ln(D_i).\tag{1}$$
+In the above, $\alpha > 0$ and captures $i$'s preference for $D_i$. For simplicity's sake, I assume preference for $x$ is constant.
+
+$i$ maximizes its utility subject to $R_i$ where $R_i = x_i + d_i$, where $x_i$ denotes the amount of resources $i$ spends on $x$ and $d_i$ the amount of resources $i$ spends on $D$. I assume $x$ is a private good that the market efficiently provides so that while it is a rival and excludable good---its consumption by $i$ precludes consumption by $-i$ and is excludable on the basis of whether $i$ pays for it---consumption of this good by multiple actors does not come at the expense of $i$. $D$, however, I allow to be either a rival and excludable (private) good or a non-rival and non-excludable (public) good. In particular, let $i$'s consumption of $D$ be given as 
+$$D_i = d_i + \beta d_{-i}\tag{2}$$
+where $D_i$ increases linearly with $d_i$ and varies linearly with allocations by all other actors, denoted $d_{-i}$, subject to the parameter $\beta$. $\beta$ captures either positive or negative spillins from payment by actors other than $i$. If $\beta>0$, $D_i$ is a public good. If $\beta < 0$, $D_i$ is a private good, subject to rival consumption among actors. If $\beta = 0$, then there is no interaction among actors in consumption of $D_i$; it is merely a private good little different from $x$.
+
+
+
